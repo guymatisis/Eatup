@@ -30,16 +30,13 @@ def ingredients_to_recipe(fridge_items):
 		# ITERATE THROUGH FRIDGE ITEMS AND COMPARE THEM TO RECIPE ITEMS
 		for fridge_item in fridge_items:
 			highest = process.extractOne(fridge_item,recipe_ingredients) #FUZZYWUZZY!! RETURNS ONLY HIGHEST MATCH... NO DUPLICATES
-			if(highest[1]>80): #IF RESULTING MATCH IS ABOVE 90 THEN KEEP. (90 IS ARBITRARY...)
+			if(highest[1]>85): #IF RESULTING MATCH IS ABOVE 90 THEN KEEP. (90 IS ARBITRARY...)
 				matches = matches +1
-				print(highest)
 		#Number of missing items
 		missing_items =len(recipe_ingredients) - matches
 		#calculate score. self explanitory.
 		score = matches - missing_items
-		if matches == 0 :
-			score_list.append(score-10) 
-		else:
+		if matches != 0 :
 			score_list.append(score) 
 	#--------------------FIND RECIPES WITH BEST SCORES --------------------
 	relevant_recipe_indexes = heapq.nlargest(5, range(len(score_list)),score_list.__getitem__) 
